@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JRC · Painel Administrativo</title>
+<link rel="icon" href="assets/logo-jrc.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-fx__glow bg-fx__glow--1"></div>
+  <div class="bg-fx__glow bg-fx__glow--2"></div>
+  <div class="bg-fx__grid"></div>
+</div>
+
+<!-- ===================== TELA DE LOGIN ===================== -->
+<div class="login-tela" id="telaLogin">
+  <form class="login-card glass" id="formLogin">
+    <img src="assets/logo-jrc.svg" alt="JRC" class="login-card__logo" />
+    <h1 class="login-card__titulo">Painel Administrativo</h1>
+    <p class="login-card__subtitulo">Acesse com suas credenciais para gerenciar o ranking de vendas.</p>
+
+    <label class="campo">
+      <span>Login</span>
+      <input type="text" id="loginUsuario" autocomplete="username" required />
+    </label>
+    <label class="campo">
+      <span>Senha</span>
+      <input type="password" id="loginSenha" autocomplete="current-password" required />
+    </label>
+
+    <button type="submit" class="botao botao--primario">Entrar</button>
+    <p class="login-card__erro" id="loginErro"></p>
+    <p class="login-card__dica">Usuário padrão de demonstração: <strong>admin</strong> / <strong>jrc2026</strong></p>
+  </form>
+</div>
+
+<!-- ===================== APP ADMIN ===================== -->
+<div class="app admin-app" id="appAdmin" hidden>
+
+  <header class="header">
+    <div class="header__brand">
+      <img src="assets/logo-jrc.svg" alt="JRC Construtora" class="header__logo" />
+      <div class="header__title-block">
+        <h1 class="header__title" style="font-size:22px;">PAINEL ADMINISTRATIVO</h1>
+        <span class="header__subtitle">Gestão de Vendas &amp; Ranking</span>
+      </div>
+    </div>
+    <nav class="admin-tabs" id="adminTabs">
+      <button class="admin-tab admin-tab--ativo" data-tab="vendas">Vendas</button>
+      <button class="admin-tab" data-tab="coordenadores">Coordenadores</button>
+      <button class="admin-tab" data-tab="equipes">Equipes</button>
+      <button class="admin-tab" data-tab="empreendimentos">Empreendimentos</button>
+    </nav>
+    <div class="header__info">
+      <a href="index.html" class="botao botao--fantasma" target="_blank">Ver Painel ↗</a>
+      <span class="admin-usuario" id="nomeUsuario">—</span>
+      <button class="botao botao--fantasma" id="btnLogout">Sair</button>
+    </div>
+  </header>
+
+  <!-- ===================== ABA VENDAS ===================== -->
+  <section class="admin-secao" id="secaoVendas">
+    <div class="admin-grid">
+      <div class="bloco admin-form-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Cadastrar Venda</h2></div>
+        <form id="formVenda" class="form">
+          <input type="hidden" id="vendaId" />
+          <label class="campo">
+            <span>Coordenador</span>
+            <select id="vendaCoordenador" required></select>
+          </label>
+          <label class="campo">
+            <span>Equipe</span>
+            <input type="text" id="vendaEquipeDisplay" disabled placeholder="Selecionada automaticamente" />
+          </label>
+          <label class="campo">
+            <span>Empreendimento</span>
+            <select id="vendaEmpreendimento" required></select>
+          </label>
+          <label class="campo">
+            <span>Unidade</span>
+            <input type="text" id="vendaUnidade" placeholder="Ex: 1204" required />
+          </label>
+          <label class="campo">
+            <span>Valor (R$)</span>
+            <input type="number" id="vendaValor" min="0" step="0.01" placeholder="Ex: 480000" required />
+          </label>
+          <label class="campo">
+            <span>Data</span>
+            <input type="date" id="vendaData" required />
+          </label>
+          <div class="form__acoes">
+            <button type="submit" class="botao botao--primario" id="btnSalvarVenda">Cadastrar Venda</button>
+            <button type="button" class="botao botao--fantasma" id="btnCancelarEdicaoVenda" hidden>Cancelar edição</button>
+          </div>
+          <p class="form__mensagem" id="vendaMensagem"></p>
+        </form>
+      </div>
+
+      <div class="bloco admin-lista-card">
+        <div class="bloco__header">
+          <h2 class="bloco__titulo">Vendas Cadastradas</h2>
+          <button class="botao botao--fantasma botao--pequeno" id="btnExportarCsv">Exportar CSV</button>
+        </div>
+
+        <div class="filtros">
+          <input type="text" id="filtroBusca" placeholder="Buscar por coordenador, empreendimento ou unidade..." />
+          <select id="filtroCoordenador"><option value="">Todos os coordenadores</option></select>
+          <select id="filtroEquipe"><option value="">Todas as equipes</option></select>
+          <select id="filtroEmpreendimento"><option value="">Todos os empreendimentos</option></select>
+          <input type="date" id="filtroDataInicio" title="Data início" />
+          <input type="date" id="filtroDataFim" title="Data fim" />
+          <button class="botao botao--fantasma botao--pequeno" id="btnLimparFiltros">Limpar</button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Data</th><th>Hora</th><th>Coordenador</th><th>Equipe</th>
+                <th>Empreendimento</th><th>Unidade</th><th>Valor</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="tabelaVendasBody"></tbody>
+          </table>
+          <p class="tabela-vazio" id="vendasVazio" hidden>Nenhuma venda encontrada com os filtros atuais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABA COORDENADORES ===================== -->
+  <section class="admin-secao" id="secaoCoordenadores" hidden>
+    <div class="admin-grid">
+      <div class="bloco admin-form-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Cadastrar Coordenador</h2></div>
+        <form id="formCoordenador" class="form">
+          <input type="hidden" id="coordenadorId" />
+          <label class="campo"><span>Nome</span><input type="text" id="coordenadorNome" required /></label>
+          <label class="campo"><span>Equipe</span><select id="coordenadorEquipe" required></select></label>
+          <label class="campo"><span>URL da foto (opcional)</span><input type="text" id="coordenadorFoto" placeholder="https://..." /></label>
+          <div class="form__acoes">
+            <button type="submit" class="botao botao--primario">Salvar Coordenador</button>
+            <button type="button" class="botao botao--fantasma" id="btnCancelarEdicaoCoordenador" hidden>Cancelar edição</button>
+          </div>
+          <p class="form__mensagem" id="coordenadorMensagem"></p>
+        </form>
+      </div>
+      <div class="bloco admin-lista-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Coordenadores</h2></div>
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead><tr><th>Nome</th><th>Equipe</th><th></th></tr></thead>
+            <tbody id="tabelaCoordenadoresBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABA EQUIPES ===================== -->
+  <section class="admin-secao" id="secaoEquipes" hidden>
+    <div class="admin-grid">
+      <div class="bloco admin-form-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Cadastrar Equipe</h2></div>
+        <form id="formEquipe" class="form">
+          <input type="hidden" id="equipeId" />
+          <label class="campo"><span>Nome</span><input type="text" id="equipeNome" required /></label>
+          <label class="campo"><span>Cor de destaque</span><input type="color" id="equipeCor" value="#0b1e3d" /></label>
+          <div class="form__acoes">
+            <button type="submit" class="botao botao--primario">Salvar Equipe</button>
+            <button type="button" class="botao botao--fantasma" id="btnCancelarEdicaoEquipe" hidden>Cancelar edição</button>
+          </div>
+          <p class="form__mensagem" id="equipeMensagem"></p>
+        </form>
+      </div>
+      <div class="bloco admin-lista-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Equipes / Imobiliárias</h2></div>
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead><tr><th>Nome</th><th>Cor</th><th></th></tr></thead>
+            <tbody id="tabelaEquipesBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABA EMPREENDIMENTOS ===================== -->
+  <section class="admin-secao" id="secaoEmpreendimentos" hidden>
+    <div class="admin-grid">
+      <div class="bloco admin-form-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Cadastrar Empreendimento</h2></div>
+        <form id="formEmpreendimento" class="form">
+          <input type="hidden" id="empreendimentoId" />
+          <label class="campo"><span>Nome</span><input type="text" id="empreendimentoNome" required /></label>
+          <label class="campo"><span>Meta de unidades</span><input type="number" id="empreendimentoMeta" min="0" value="0" /></label>
+          <label class="campo"><span>URL da imagem (opcional)</span><input type="text" id="empreendimentoImagem" placeholder="https://..." /></label>
+          <div class="form__acoes">
+            <button type="submit" class="botao botao--primario">Salvar Empreendimento</button>
+            <button type="button" class="botao botao--fantasma" id="btnCancelarEdicaoEmpreendimento" hidden>Cancelar edição</button>
+          </div>
+          <p class="form__mensagem" id="empreendimentoMensagem"></p>
+        </form>
+      </div>
+      <div class="bloco admin-lista-card">
+        <div class="bloco__header"><h2 class="bloco__titulo">Empreendimentos</h2></div>
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead><tr><th>Nome</th><th>Meta</th><th></th></tr></thead>
+            <tbody id="tabelaEmpreendimentosBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast-venda" id="toastAdmin" aria-live="polite"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

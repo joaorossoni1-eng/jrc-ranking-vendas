@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JRC · Ranking de Vendas</title>
+<link rel="icon" href="assets/logo-jrc.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-fx__glow bg-fx__glow--1"></div>
+  <div class="bg-fx__glow bg-fx__glow--2"></div>
+  <div class="bg-fx__grid"></div>
+</div>
+
+<div class="app">
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="header">
+    <div class="header__brand">
+      <img src="assets/logo-jrc.svg" alt="JRC Construtora" class="header__logo" />
+      <div class="header__title-block">
+        <h1 class="header__title">RANKING DE VENDAS</h1>
+        <span class="header__subtitle">Painel Comercial em Tempo Real</span>
+      </div>
+    </div>
+
+    <div class="header__status">
+      <div class="status-pill" id="statusConexao">
+        <span class="status-pill__dot"></span>
+        <span class="status-pill__label">Conectando…</span>
+      </div>
+    </div>
+
+    <div class="header__info">
+      <div class="header__datetime">
+        <span class="header__date" id="dataAtual">--</span>
+        <span class="header__clock" id="horaAtual">--:--:--</span>
+      </div>
+      <div class="header__total-vendas">
+        <span class="header__total-vendas-label">Total Geral de Vendas</span>
+        <span class="header__total-vendas-valor" id="totalGeralVendas">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== CARD DE RESUMO ===================== -->
+  <section class="resumo" aria-label="Resumo geral">
+    <div class="resumo-card">
+      <span class="resumo-card__icone">🏆</span>
+      <span class="resumo-card__label">Coordenador Líder</span>
+      <span class="resumo-card__valor" id="resumoCoordenadorLider">—</span>
+    </div>
+    <div class="resumo-card">
+      <span class="resumo-card__icone">🛡️</span>
+      <span class="resumo-card__label">Equipe Líder</span>
+      <span class="resumo-card__valor" id="resumoEquipeLider">—</span>
+    </div>
+    <div class="resumo-card">
+      <span class="resumo-card__icone">🏢</span>
+      <span class="resumo-card__label">Empreendimento + Vendido</span>
+      <span class="resumo-card__valor" id="resumoEmpreendimentoTop">—</span>
+    </div>
+    <div class="resumo-card">
+      <span class="resumo-card__icone">💰</span>
+      <span class="resumo-card__label">Valor Total Vendido</span>
+      <span class="resumo-card__valor" id="resumoValorTotal">R$ 0</span>
+    </div>
+    <div class="resumo-card">
+      <span class="resumo-card__icone">🕒</span>
+      <span class="resumo-card__label">Última Venda</span>
+      <span class="resumo-card__valor resumo-card__valor--small" id="resumoUltimaVenda">—</span>
+    </div>
+  </section>
+
+  <!-- ===================== CORPO PRINCIPAL ===================== -->
+  <main class="painel">
+
+    <!-- RANKING DE COORDENADORES -->
+    <section class="bloco bloco--ranking" aria-label="Ranking por coordenador">
+      <div class="bloco__header">
+        <h2 class="bloco__titulo"><span class="bloco__titulo-icone">🥇</span> Ranking por Coordenador</h2>
+        <span class="bloco__legenda">Atualizado em tempo real</span>
+      </div>
+      <div class="ranking-lista" id="rankingCoordenadores">
+        <!-- itens injetados via JS -->
+      </div>
+    </section>
+
+    <aside class="lateral">
+
+      <!-- DISPUTA ENTRE IMOBILIÁRIAS -->
+      <section class="bloco bloco--disputa" aria-label="Disputa entre imobiliárias">
+        <div class="bloco__header">
+          <h2 class="bloco__titulo"><span class="bloco__titulo-icone">⚔️</span> Disputa Entre Imobiliárias</h2>
+        </div>
+        <div class="disputa" id="disputaEquipes">
+          <!-- injetado via JS -->
+        </div>
+      </section>
+
+      <!-- RANKING DE EMPREENDIMENTOS -->
+      <section class="bloco bloco--empreendimentos" aria-label="Ranking de empreendimentos">
+        <div class="bloco__header">
+          <h2 class="bloco__titulo"><span class="bloco__titulo-icone">🏗️</span> Empreendimentos</h2>
+        </div>
+        <div class="empreendimentos-lista" id="rankingEmpreendimentos">
+          <!-- injetado via JS -->
+        </div>
+      </section>
+
+      <!-- ÚLTIMAS VENDAS -->
+      <section class="bloco bloco--ultimas" aria-label="Últimas vendas">
+        <div class="bloco__header">
+          <h2 class="bloco__titulo"><span class="bloco__titulo-icone">📋</span> Últimas Vendas</h2>
+        </div>
+        <div class="ultimas-lista" id="ultimasVendas">
+          <!-- injetado via JS -->
+        </div>
+      </section>
+
+    </aside>
+  </main>
+
+  <footer class="rodape">
+    <span>JRC Construtora · 40 anos</span>
+    <a href="admin.html" class="rodape__admin">Área Administrativa</a>
+  </footer>
+</div>
+
+<!-- Toast de nova venda -->
+<div class="toast-venda" id="toastVenda" aria-live="polite"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

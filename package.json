@@ -1,0 +1,56 @@
+{
+  "name": "jrc-ranking-vendas",
+  "version": "1.0.0",
+  "description": "Painel de Ranking de Vendas JRC - Dashboard comercial em tempo real",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js",
+    "seed": "node backend/database/seed.js"
+  },
+  "keywords": ["jrc", "vendas", "ranking", "dashboard", "imobiliaria"],
+  "author": "JRC Construtora",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

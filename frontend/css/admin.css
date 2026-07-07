@@ -1,0 +1,177 @@
+/* ============================================================================
+   JRC · Painel Administrativo — estilos específicos
+   Reaproveita variáveis e base visual de style.css
+   ============================================================================ */
+
+.admin-body { min-height: 100vh; }
+
+/* ---------------------------------------------------------------------- */
+/* Tela de login                                                          */
+/* ---------------------------------------------------------------------- */
+.login-tela {
+  position: relative; z-index: 2;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.login-card {
+  width: 100%; max-width: 380px;
+  padding: 34px 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-strong);
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+.login-card__logo { height: 40px; margin-bottom: 14px; }
+.login-card__titulo { font-family: var(--font-display); font-size: 20px; font-weight: 700; }
+.login-card__subtitulo { font-size: 12.5px; color: var(--cinza-400); margin-bottom: 16px; }
+.login-card__erro { color: var(--vermelho); font-size: 12.5px; min-height: 16px; }
+.login-card__dica { font-size: 11px; color: var(--cinza-400); margin-top: 10px; }
+.login-card .campo, .login-card .botao { width: 100%; }
+.login-card .botao--primario { margin-top: 10px; }
+
+/* ---------------------------------------------------------------------- */
+/* Layout admin                                                           */
+/* ---------------------------------------------------------------------- */
+.admin-app .header { flex-wrap: wrap; row-gap: 12px; }
+
+.admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.admin-tab {
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.04);
+  color: var(--cinza-100);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.admin-tab:hover { background: rgba(255,255,255,0.08); }
+.admin-tab--ativo {
+  background: linear-gradient(120deg, var(--dourado-600), var(--dourado-700));
+  color: #1a1300;
+  border-color: transparent;
+}
+
+.admin-usuario { font-size: 13px; color: var(--cinza-100); padding: 0 4px; }
+
+.admin-secao { display: flex; flex-direction: column; gap: 18px; }
+.admin-grid { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: start; }
+
+.admin-form-card, .admin-lista-card { min-height: 0; }
+
+/* ---------------------------------------------------------------------- */
+/* Formulários                                                            */
+/* ---------------------------------------------------------------------- */
+.form { display: flex; flex-direction: column; gap: 12px; }
+.campo { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--cinza-100); }
+.campo input, .campo select {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.05);
+  color: var(--branco);
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color .2s ease, background .2s ease;
+}
+.campo input:focus, .campo select:focus { border-color: var(--dourado-500); background: rgba(255,255,255,0.08); }
+.campo input:disabled { opacity: 0.55; }
+.campo input[type="color"] { padding: 4px; height: 40px; cursor: pointer; }
+.campo select option { color: #111; }
+
+.form__acoes { display: flex; gap: 10px; margin-top: 4px; }
+.form__mensagem { font-size: 12.5px; min-height: 16px; }
+.form__mensagem.sucesso { color: var(--verde); }
+.form__mensagem.erro { color: var(--vermelho); }
+
+.botao {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+  text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-body);
+}
+.botao--primario {
+  background: linear-gradient(120deg, var(--dourado-600), var(--dourado-700));
+  color: #1a1300;
+  border-color: transparent;
+  flex: 1;
+}
+.botao--primario:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.botao--fantasma { background: rgba(255,255,255,0.04); color: var(--cinza-100); }
+.botao--fantasma:hover { background: rgba(255,255,255,0.09); color: var(--branco); }
+.botao--pequeno { padding: 6px 12px; font-size: 12px; }
+.botao--perigo { background: rgba(239,75,95,0.14); border-color: rgba(239,75,95,0.4); color: #ff8a97; }
+.botao--perigo:hover { background: rgba(239,75,95,0.24); }
+
+/* ---------------------------------------------------------------------- */
+/* Filtros                                                                */
+/* ---------------------------------------------------------------------- */
+.filtros {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto auto auto;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.filtros input, .filtros select {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.05);
+  color: var(--branco);
+  font-size: 12.5px;
+  outline: none;
+}
+.filtros select option { color: #111; }
+
+/* ---------------------------------------------------------------------- */
+/* Tabelas                                                                */
+/* ---------------------------------------------------------------------- */
+.tabela-wrap { overflow-x: auto; max-height: 62vh; overflow-y: auto; }
+.tabela { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.tabela thead th {
+  text-align: left; padding: 10px 12px;
+  color: var(--cinza-400); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky; top: 0; background: var(--azul-900); z-index: 1;
+}
+.tabela tbody td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: middle; }
+.tabela tbody tr:hover { background: rgba(255,255,255,0.03); }
+.tabela-acoes { display: flex; gap: 6px; justify-content: flex-end; }
+.tabela-vazio { padding: 24px; text-align: center; color: var(--cinza-400); font-size: 13px; }
+
+.badge-equipe {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; padding: 3px 9px; border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+}
+.badge-equipe__dot { width: 7px; height: 7px; border-radius: 50%; }
+
+.icone-botao {
+  width: 30px; height: 30px; border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);
+  cursor: pointer; font-size: 13px; color: var(--cinza-100);
+  transition: all .2s ease;
+}
+.icone-botao:hover { background: rgba(255,255,255,0.1); color: var(--branco); }
+.icone-botao--perigo:hover { background: rgba(239,75,95,0.2); color: #ff8a97; }
+
+/* ---------------------------------------------------------------------- */
+/* Responsivo                                                             */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .admin-grid { grid-template-columns: 1fr; }
+  .filtros { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 620px) {
+  .filtros { grid-template-columns: 1fr; }
+  .admin-tabs { width: 100%; justify-content: space-between; }
+}
